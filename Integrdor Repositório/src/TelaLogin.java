@@ -130,7 +130,7 @@ public class TelaLogin extends JFrame {
         tela.add(senha);
 
         // =====================================================
-        // BOTÃO OLHO
+        // BOTÃO OLHO meu nome é bruto sobrenome memo
         // =====================================================
 
         olho = new JButton();
