@@ -154,7 +154,7 @@ public class App extends JFrame {
     }
 
     private ImageIcon carregarLogo() {
-        String[] caminhos = { "src/images/Logo_arcade.png", "images/Logo_arcade.png" };
+        String[] caminhos = { "src/images/Logo_arcade.png"};
         for (String caminho : caminhos) {
             File arquivo = new File(caminho);
             if (arquivo.exists()) {
