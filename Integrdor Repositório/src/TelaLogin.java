@@ -124,23 +124,18 @@ public class TelaLogin extends JFrame {
 
         tela.add(senha);
 
-        // =====================================================
-        // BOTÃO OLHO
-        // =====================================================
-
-        JButton olho = new JButton();
+        JButton olho = new JButton("👁");
 
         olho.setOpaque(false);
         olho.setContentAreaFilled(false);
         olho.setBorderPainted(false);
         olho.setFocusPainted(false);
 
-        olho.setCursor(
-                new Cursor(
-                        Cursor.HAND_CURSOR));
+        olho.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        olho.addActionListener(
-                e -> alternarSenha());
+        olho.addActionListener(e -> {
+            alternarSenha();
+        });
 
         tela.add(olho);
 
