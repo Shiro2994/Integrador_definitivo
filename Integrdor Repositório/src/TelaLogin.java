@@ -9,6 +9,9 @@ public class TelaLogin extends JFrame {
     private JTextField email;
     private JPasswordField senha;
 
+    private JButton olho;
+    private JButton login;
+
     private boolean mostrarSenha = false;
 
     // =========================================================
@@ -83,6 +86,7 @@ public class TelaLogin extends JFrame {
                         16));
 
         email.setForeground(BRANCO);
+
         email.setCaretColor(BRANCO);
 
         email.setOpaque(false);
@@ -109,6 +113,7 @@ public class TelaLogin extends JFrame {
                         16));
 
         senha.setForeground(BRANCO);
+
         senha.setCaretColor(BRANCO);
 
         senha.setOpaque(false);
@@ -124,18 +129,28 @@ public class TelaLogin extends JFrame {
 
         tela.add(senha);
 
-        JButton olho = new JButton("👁");
+        // =====================================================
+        // BOTÃO OLHO
+        // =====================================================
+
+        olho = new JButton();
 
         olho.setOpaque(false);
+
         olho.setContentAreaFilled(false);
+
         olho.setBorderPainted(false);
+
         olho.setFocusPainted(false);
 
-        olho.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        olho.setText("");
 
-        olho.addActionListener(e -> {
-            alternarSenha();
-        });
+        olho.setCursor(
+                new Cursor(
+                        Cursor.HAND_CURSOR));
+
+        olho.addActionListener(
+                e -> alternarSenha());
 
         tela.add(olho);
 
@@ -143,11 +158,14 @@ public class TelaLogin extends JFrame {
         // BOTÃO LOGIN
         // =====================================================
 
-        JButton login = new JButton();
+        login = new JButton();
 
         login.setOpaque(false);
+
         login.setContentAreaFilled(false);
+
         login.setBorderPainted(false);
+
         login.setFocusPainted(false);
 
         login.setCursor(
@@ -174,7 +192,8 @@ public class TelaLogin extends JFrame {
         // =====================================================
 
         tela.getInputMap(
-                JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(
                         KeyStroke.getKeyStroke(
                                 KeyEvent.VK_ESCAPE,
                                 0),
@@ -203,16 +222,21 @@ public class TelaLogin extends JFrame {
 
         if (mostrarSenha) {
 
+            // Mostra a senha
             senha.setEchoChar(
                     (char) 0);
 
         } else {
 
+            // Esconde a senha
             senha.setEchoChar(
                     '●');
         }
 
         senha.requestFocus();
+
+        // Atualiza o desenho do olho
+        repaint();
     }
 
     // =========================================================
@@ -225,6 +249,10 @@ public class TelaLogin extends JFrame {
 
         String senhaDigitada = new String(
                 senha.getPassword());
+
+        // =====================================================
+        // VERIFICA CAMPOS VAZIOS
+        // =====================================================
 
         if (usuario.isEmpty()
                 ||
@@ -239,12 +267,20 @@ public class TelaLogin extends JFrame {
             return;
         }
 
+        // =====================================================
+        // LOGIN
+        // =====================================================
+
         if (usuario.equals("admin")
                 &&
                 senhaDigitada.equals("1234")) {
+
+            // Abre a tela App
             App app = new App();
+
             app.setVisible(true);
 
+            // Fecha a tela de login
             dispose();
 
         } else {
@@ -266,6 +302,7 @@ public class TelaLogin extends JFrame {
         private double escala = 1.0;
 
         private int deslocamentoX;
+
         private int deslocamentoY;
 
         public Tela() {
@@ -276,7 +313,7 @@ public class TelaLogin extends JFrame {
         }
 
         // =====================================================
-        // CALCULA ESCALA E CENTRALIZA
+        // CALCULA ESCALA
         // =====================================================
 
         private void calcularEscala() {
@@ -298,17 +335,31 @@ public class TelaLogin extends JFrame {
             deslocamentoY = (getHeight() - alturaFinal) / 2;
         }
 
+        // =====================================================
+        // CONVERTE X
+        // =====================================================
+
         private int X(double x) {
 
-            return deslocamentoX +
+            return deslocamentoX
+                    +
                     (int) (x * escala);
         }
 
+        // =====================================================
+        // CONVERTE Y
+        // =====================================================
+
         private int Y(double y) {
 
-            return deslocamentoY +
+            return deslocamentoY
+                    +
                     (int) (y * escala);
         }
+
+        // =====================================================
+        // CONVERTE TAMANHO
+        // =====================================================
 
         private int S(double valor) {
 
@@ -324,43 +375,29 @@ public class TelaLogin extends JFrame {
 
             calcularEscala();
 
-            // Email
+            // =================================================
+            // EMAIL
+            // =================================================
+
             email.setBounds(
                     X(640),
                     Y(421),
                     S(382),
                     S(54));
 
-            // Senha
+            // =================================================
+            // SENHA
+            // =================================================
+
             senha.setBounds(
                     X(640),
                     Y(526),
                     S(382),
                     S(55));
 
-            // Olho
-            /*
-             * Agora o botão do olho fica exatamente
-             * sobre o desenho e recebe o clique.
-             */
-            Component[] componentes = getComponents();
-
-            for (Component c : componentes) {
-
-                if (c instanceof JButton) {
-
-                    JButton b = (JButton) c;
-
-                    // Primeiro botão = olho
-                    if (b.getBounds().x < 1000) {
-
-                        // Não altera o botão de login
-                    }
-                }
-            }
-
-            // Posição do olho
-            Component olho = getComponents()[2];
+            // =================================================
+            // OLHO
+            // =================================================
 
             olho.setBounds(
                     X(965),
@@ -368,8 +405,9 @@ public class TelaLogin extends JFrame {
                     S(57),
                     S(55));
 
-            // Botão login
-            Component login = getComponents()[3];
+            // =================================================
+            // BOTÃO LOGIN
+            // =================================================
 
             login.setBounds(
                     X(664),
@@ -536,17 +574,20 @@ public class TelaLogin extends JFrame {
                     658,
                     542);
 
+            // =================================================
+            // OLHO
+            // =================================================
+
             desenharOlho(
                     g2,
                     980,
                     544);
 
             // =================================================
-            // BOTÃO
+            // BOTÃO LOGIN
             // =================================================
 
-            g2.setColor(
-                    AZUL);
+            g2.setColor(AZUL);
 
             g2.fillRoundRect(
                     664,
@@ -573,8 +614,7 @@ public class TelaLogin extends JFrame {
                     10,
                     10);
 
-            g2.setColor(
-                    Color.WHITE);
+            g2.setColor(Color.WHITE);
 
             g2.setFont(
                     new Font(
@@ -586,12 +626,13 @@ public class TelaLogin extends JFrame {
 
             FontMetrics fm = g2.getFontMetrics();
 
-            int tx = 831 -
+            int tx = 831
+                    -
                     fm.stringWidth(texto) / 2;
 
-            int ty = 617 +
-                    (62 -
-                            fm.getHeight()) / 2
+            int ty = 617
+                    +
+                    (62 - fm.getHeight()) / 2
                     +
                     fm.getAscent();
 
@@ -604,7 +645,7 @@ public class TelaLogin extends JFrame {
         }
 
         // =====================================================
-        // CAMPO
+        // DESENHAR CAMPO
         // =====================================================
 
         private void desenharCampo(
@@ -615,7 +656,7 @@ public class TelaLogin extends JFrame {
                 int h) {
 
             g.setColor(CAMPO);
-
+            // oi
             g.fillRoundRect(
                     x,
                     y,
@@ -685,8 +726,7 @@ public class TelaLogin extends JFrame {
 
             a.closePath();
 
-            d.setColor(
-                    BRANCO);
+            d.setColor(BRANCO);
 
             d.fill(a);
 
@@ -710,13 +750,11 @@ public class TelaLogin extends JFrame {
 
             parte.closePath();
 
-            d.setColor(
-                    AZUL);
+            d.setColor(AZUL);
 
             d.fill(parte);
 
-            d.setColor(
-                    AZUL);
+            d.setColor(AZUL);
 
             d.setStroke(
                     new BasicStroke(
@@ -818,17 +856,51 @@ public class TelaLogin extends JFrame {
             g.setStroke(
                     new BasicStroke(2));
 
-            g.drawOval(
-                    x,
-                    y,
-                    22,
-                    15);
+            // =================================================
+            // OLHO ABERTO
+            // =================================================
 
-            g.fillOval(
-                    x + 7,
-                    y + 4,
-                    8,
-                    8);
+            if (mostrarSenha) {
+
+                g.drawOval(
+                        x,
+                        y,
+                        22,
+                        15);
+
+                g.fillOval(
+                        x + 7,
+                        y + 4,
+                        8,
+                        8);
+
+            }
+
+            // =================================================
+            // OLHO FECHADO
+            // =================================================
+
+            else {
+
+                g.drawOval(
+                        x,
+                        y,
+                        22,
+                        15);
+
+                g.fillOval(
+                        x + 7,
+                        y + 4,
+                        8,
+                        8);
+
+                // Risco sobre o olho
+                g.drawLine(
+                        x - 3,
+                        y - 3,
+                        x + 25,
+                        y + 19);
+            }
         }
     }
 
