@@ -5,7 +5,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 public class App extends JFrame {
 
@@ -154,12 +153,10 @@ public class App extends JFrame {
     }
 
     private ImageIcon carregarLogo() {
-        String[] caminhos = { "src/images/Logo_arcade.png"};
-        for (String caminho : caminhos) {
-            File arquivo = new File(caminho);
-            if (arquivo.exists()) {
-                return new ImageIcon(arquivo.getAbsolutePath());
-            }
+        // Busca a imagem no classpath (/images/Logo_arcade.png)
+        URL resource = getClass().getResource("/images/Logo_arcade.png");
+        if (resource != null) {
+            return new ImageIcon(resource);
         }
         return null;
     }
@@ -167,6 +164,5 @@ public class App extends JFrame {
     private Image carregarIconeJanela() {
         ImageIcon logo = carregarLogo();
         return logo != null ? logo.getImage() : null;
-
     }
 }

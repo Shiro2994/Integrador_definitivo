@@ -3,7 +3,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -103,8 +103,7 @@ public class PainelExtensor extends JPanel {
                 larguraAtual += VELOCIDADE_ANIMACAO;
                 if (larguraAtual >= larguraAberto) {
                     larguraAtual = larguraAberto;
-                    timerAnimacao.stop();// acongtece se algo acontecer antes mas se nao acontece, é porque nao
-                                         // aconteceu.
+                    timerAnimacao.stop();
                 }
             } else {
                 larguraAtual -= VELOCIDADE_ANIMACAO;
@@ -125,20 +124,16 @@ public class PainelExtensor extends JPanel {
     }
 
     private ImageIcon carregarIcone(String nomeImagem) {
-        String[] caminhos = {
-                "src/images/" + nomeImagem,
-                "images/" + nomeImagem
-        };
+        // Carrega o recurso através do ClassLoader no classpath
+        URL imgURL = getClass().getResource("/images/" + nomeImagem);
 
-        for (String caminho : caminhos) {
-            File arquivo = new File(caminho);
-            if (arquivo.exists()) {
-                Image imagem = new ImageIcon(arquivo.getAbsolutePath()).getImage();
-                Image imagemRedimensionada = imagem.getScaledInstance(34, 34, Image.SCALE_SMOOTH);
-                return new ImageIcon(imagemRedimensionada);
-            }
+        if (imgURL != null) {
+            Image imagem = new ImageIcon(imgURL).getImage();
+            Image imagemRedimensionada = imagem.getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+            return new ImageIcon(imagemRedimensionada);
         }
 
+        System.err.println("Imagem não encontrada: /images/" + nomeImagem);
         return new ImageIcon();
     }
 }
